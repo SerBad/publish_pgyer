@@ -85,3 +85,5 @@ task uploadpython(type: Exec) {
 ```
 ./gradlew  uploadpython
 ```
+
+项目地址，https://github.com/SerBad/publish_pgyer
