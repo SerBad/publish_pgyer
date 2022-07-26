@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
 ```gradle
 task uploadpython(type: Exec) {
-    commandLine 'python3', '../upload_pgyer.py', '--path', "$buildDir/outputs/apk", '--uKey', '你自己的key', '--api_key', '你自己的key'
+    commandLine 'python3', "${rootDir.absolutePath}/publish_pgyer/upload_pgyer.py", '--path', "$buildDir/outputs/apk", '--uKey', '你自己的key', '--api_key', '你自己的key'
 }
 ```
 
