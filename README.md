@@ -9,10 +9,11 @@ task uploadpython(type: Exec) {
 ```
 
 需要注意的是，新版本的apk不在outputs下面了，是在``"$buildDir/intermediates/apk"``下面。
-然后使用下面的命令就可以上传了。
+
+新建上面的任务之后，然后使用下面的命令就可以上传了。
 
 ```
-./gradlew  uploadpython
+./gradlew uploadpython
 ```
 
 项目地址，https://github.com/SerBad/publish_pgyer
