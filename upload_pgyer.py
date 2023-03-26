@@ -56,7 +56,7 @@ def buildInfo(_api_key: str, build_key: str) -> bool:
         print("发布失败-->", build_info_response.text)
         return True
     elif code == 0:
-        webchat(data['data'])
+        wechat(data['data'])
         print("发布成功-->", build_info_response.text)
         return True
     else:
@@ -65,14 +65,18 @@ def buildInfo(_api_key: str, build_key: str) -> bool:
         return buildInfo(_api_key, build_key)
 
 
-def webchat(data):
+def count_size(size: int) -> str:
+    return str(float('%.2f' % (size / 1024 / 1024))) + "MB"
+
+
+def wechat(data):
     e = {
         'msgtype': "text",
         'text': {
             "content": "更新了白鹭湾\n" +
                        "应用名称：" + data["buildName"] + "\n" +
                        "版本号：" + data["buildVersion"] + "\n" +
-                       "应用大小：" + data["buildFileSize"] + "\n" +
+                       "应用大小：" + count_size(data["buildFileSize"]) + "\n" +
                        "应用二维码地址：" + data["buildQRCodeURL"] + "\n" +
                        "应用更新时间：" + data["buildUpdated"] + "\n"
         }}
