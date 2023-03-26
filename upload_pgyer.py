@@ -65,8 +65,8 @@ def buildInfo(_api_key: str, build_key: str) -> bool:
         return buildInfo(_api_key, build_key)
 
 
-def count_size(size: int) -> str:
-    return str(float('%.2f' % (size / 1024 / 1024))) + "MB"
+def count_size(size: str) -> str:
+    return str(float('%.2f' % (int(size) / 1024 / 1024))) + "MB"
 
 
 def wechat(data):
