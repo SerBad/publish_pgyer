@@ -17,7 +17,7 @@ build_info_url = "https://www.pgyer.com/apiv2/app/buildInfo"
 # https://developer.work.weixin.qq.com/document/path/91770
 wechat_webhook = ""
 
-
+ 
 class UploadOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(description="自动上传文件")
@@ -70,20 +70,26 @@ def count_size(size: str) -> str:
 
 
 def wechat(data):
-    e = {
-        'msgtype': "text",
-        'text': {
-            "content": "更新了白鹭湾\n" +
-                       "应用名称：" + data["buildName"] + "\n" +
-                       "版本号：" + data["buildVersion"] + "\n" +
-                       "应用大小：" + count_size(data["buildFileSize"]) + "\n" +
-                       "应用二维码地址：" + data["buildQRCodeURL"] + "\n" +
-                       "应用更新时间：" + data["buildUpdated"] + "\n"
-        }}
+    if (len(wechat_webhook)) <= 0:
+        print(
+            "如果需要推送企业微信群消息，请配置wechat_webhook，文档地址见",
+            "https://developer.work.weixin.qq.com/document/path/91770")
+    else:
+        e = {
+            'msgtype': "text",
+            'text': {
+                "content": "更新了白鹭湾\n" +
+                           "应用名称：" + data["buildName"] + "\n" +
+                           "版本号：" + data["buildVersion"] + "\n" +
+                           "应用大小：" + count_size(data["buildFileSize"]) + "\n" +
+                           "应用二维码地址：" + data["buildQRCodeURL"] + "\n" +
+                           "应用更新时间：" + data["buildUpdated"] + "\n"
+            }}
 
-    result_response = requests.post(wechat_webhook, data=json.dumps(e), headers={'Content-Type': "application/json"})
-    text = json.loads(result_response.text)
-    print("推送企业微信群消息-->", text)
+        result_response = requests.post(wechat_webhook, data=json.dumps(e),
+                                        headers={'Content-Type': "application/json"})
+        text = json.loads(result_response.text)
+        print("推送企业微信群消息-->", text)
 
 
 # MultipartEncoderMonitor的进度反馈
