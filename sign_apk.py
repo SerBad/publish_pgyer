@@ -64,8 +64,4 @@ if __name__ == '__main__':
     # 替换自己的密码
     password = args.password
     apk_path = args.path
-    dir_name = os.path.dirname(apk_path)
-    # sign_apk_path = dir_name + os.sep + os.path.basename(apk_path).replace('.apk', '_sign.apk')
-
-    # print('sign_apk_path', sign_apk_path)
     query_by_apksigner(apk_path, apk_path)
