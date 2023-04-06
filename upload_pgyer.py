@@ -17,7 +17,7 @@ build_info_url = "https://www.pgyer.com/apiv2/app/buildInfo"
 # https://developer.work.weixin.qq.com/document/path/91770
 wechat_webhook = []
 
- 
+
 class UploadOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(description="自动上传文件")
@@ -71,7 +71,7 @@ def count_size(size: str) -> str:
 
 
 def wechat(data):
-    if (len(wechat_webhook)) <= 0:
+    if wechat_webhook is None or (len(wechat_webhook)) <= 0:
         print(
             "如果需要推送企业微信群消息，请配置wechat_webhook，文档地址见",
             "https://developer.work.weixin.qq.com/document/path/91770")
