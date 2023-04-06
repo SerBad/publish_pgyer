@@ -15,7 +15,7 @@ build_info_url = "https://www.pgyer.com/apiv2/app/buildInfo"
 
 # 企业微信群机器人配置说明
 # https://developer.work.weixin.qq.com/document/path/91770
-wechat_webhook = ""
+wechat_webhook = []
 
  
 class UploadOptions:
@@ -23,6 +23,7 @@ class UploadOptions:
         self.parser = argparse.ArgumentParser(description="自动上传文件")
         self.parser.add_argument("--path", type=str, required=True, help="apk的绝对路径，或者apk的根目录")
         self.parser.add_argument("--api_key", type=str, required=True, help="_api_key")
+        self.parser.add_argument("--wechat_webhook", type=str, nargs='*', required=False, help="企业微信群机器人")
 
     def parse(self):
         return self.parser.parse_args()
@@ -86,10 +87,11 @@ def wechat(data):
                            "应用更新时间：" + data["buildUpdated"] + "\n"
             }}
 
-        result_response = requests.post(wechat_webhook, data=json.dumps(e),
-                                        headers={'Content-Type': "application/json"})
-        text = json.loads(result_response.text)
-        print("推送企业微信群消息-->", text)
+        for webhook in wechat_webhook:
+            result_response = requests.post(webhook, data=json.dumps(e),
+                                            headers={'Content-Type': "application/json"})
+            text = json.loads(result_response.text)
+            print("推送企业微信群消息-->", webhook, text)
 
 
 # MultipartEncoderMonitor的进度反馈
@@ -101,6 +103,9 @@ def my_callback(monitor):
 if __name__ == '__main__':
     parser = UploadOptions()
     args = parser.parse()
+    wechat_webhook = args.wechat_webhook
+
+    print(" wechat_webhook ", wechat_webhook)
     print(args)
     paths = []
     # 支持只上传一个apk文件
